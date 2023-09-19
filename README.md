@@ -51,7 +51,6 @@ Must be a mem-leak
 
 #The result
 
-http://lundin.duckdns.org/pong.mov
+http://lundin.duckdns.org/pong.html
 
-Press play to see the video
 
