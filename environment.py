@@ -1,13 +1,21 @@
 import gymnasium as gym
-import preprocess_frame as ppf
 import numpy as np
+import cv2
+
+
+def resize_frame(frame):
+    frame = frame[30:-12,5:-4]
+    frame = np.average(frame,axis = 2)
+    frame = cv2.resize(frame,(84,84),interpolation = cv2.INTER_NEAREST)
+    frame = np.array(frame,dtype = np.uint8)
+    return frame
 
 
 def initialize_new_game(name, env, agent):
     """We don't want an agents past game influencing its new game, so we add in some dummy data to initialize"""
     
     env.reset()
-    starting_frame = ppf.resize_frame(env.step(0)[0])
+    starting_frame = resize_frame(env.step(0)[0])
 
     dummy_action = 0
     dummy_reward = 0
@@ -36,7 +44,7 @@ def take_step(name, env, agent, score, debug):
     next_frame, next_frames_reward, next_frame_terminal, next_frame_trunc, info = env.step(agent.memory.actions[-1])
     next_frame_terminal = next_frame_terminal or next_frame_trunc
     #4: Get next state
-    next_frame = ppf.resize_frame(next_frame)
+    next_frame = resize_frame(next_frame)
     new_state = [agent.memory.frames[-3], agent.memory.frames[-2], agent.memory.frames[-1], next_frame]
     new_state = np.moveaxis(new_state,0,2)/255 #We have to do this to get it into keras's goofy format of [batch_size,rows,columns,channels]
     new_state = np.expand_dims(new_state,0) #^^^
