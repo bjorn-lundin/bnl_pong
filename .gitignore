@@ -15,5 +15,6 @@ __pycache__/
 
 *.mov
 
-
 recent_weights.hdf5
+
+training.log
