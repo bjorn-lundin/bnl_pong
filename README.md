@@ -8,13 +8,17 @@ After 24 hours with an iMac 27" running Ubuntu 22.04
 the built-in AI gets beat by 10 points on avg (21-11)
 
 
-Install this
+Clone it
+    cd 
+    cd git
+    git clone https://github.com/bjorn-lundin/bnl_pong
 
+Install this
     sudo apt install python3-venv -y
     sudo apt install python3-tk
-    python3 -m venv pong
-    source pong/bin/activate
-    cd pong/
+    python3 -m venv bnl_pong
+    source bnl_pong/bin/activate
+    cd bnl_pong/
     pip install numpy
     pip install gymnasium[atari]
     pip install gymnasium[accept-rom-license]
@@ -23,9 +27,6 @@ Install this
     pip install opencv-python
     python pong_orig.py --render --resume
 
-and clone it
-
-    git clone https://github.com/bjorn-lundin/bnl_pong
 
 
 32 Gb RAM but with tensorflow 2.9 it does not use more that 8-9 GB
@@ -34,7 +35,7 @@ Tensorflow 2.13 eats everything.
 
 Must be a mem-leak
 
-    pong2) bnl@iMac:~/git/pong2$ lscpu
+    bnl_pong) bnl@iMac:~/git/bnl_pong$ lscpu
     Architecture:            x86_64
       CPU op-mode(s):        32-bit, 64-bit
       Address sizes:         36 bits physical, 48 bits virtual
