@@ -7,7 +7,8 @@ import numpy as np
 
 name = 'PongDeterministic-v4'
 
-debug=True
+#debug=True
+debug=False
 #set debug to true for rendering
 
 agent = the_agent.Agent(possible_actions=[0,2,3],starting_mem_len=50000,max_mem_len=750000,starting_epsilon = 1, learn_rate = .00025)
@@ -40,7 +41,7 @@ for i in range(1000000):
     print('Max Score: ' + str(max_score))
     print('Epsilon: ' + str(agent.epsilon))
 
-    if i%100==0 and i!=0:
+    if i%10==0 and i!=0:
         last_100_avg.append(sum(scores)/len(scores))
 #        plt.plot(np.arange(0,i+1,100),last_100_avg)
 #        plt.show()
