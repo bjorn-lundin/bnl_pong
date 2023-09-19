@@ -20,6 +20,7 @@ Install this
     pip install gymnasium[accept-rom-license]
     pip install matplotlib
     pip install tensorflow==2.9
+    pip install opencv-python
     python pong_orig.py --render --resume
 
 and clone it
