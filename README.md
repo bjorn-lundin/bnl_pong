@@ -28,7 +28,10 @@ and clone it
 
 
 32 Gb RAM but with tensorflow 2.9 it does not use more that 8-9 GB
-Tensorflow 2.13 eats everything. Must be a mem-leak
+
+Tensorflow 2.13 eats everything. 
+
+Must be a mem-leak
 
     pong2) bnl@iMac:~/git/pong2$ lscpu
     Architecture:            x86_64
