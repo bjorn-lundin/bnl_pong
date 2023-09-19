@@ -8,3 +8,10 @@ bnl_pong/share/
 bnl_pong/lib64
 
 bnl_pong/pyvenv.cfg
+
+__pycache__/
+
+*.MOV
+
+*.mov
+
