@@ -1,4 +1,4 @@
-import gym
+import gymnasium as gym
 import preprocess_frame as ppf
 import numpy as np
 
@@ -15,21 +15,26 @@ def initialize_new_game(name, env, agent):
     for i in range(3):
         agent.memory.add_experience(starting_frame, dummy_reward, dummy_action, dummy_done)
 
-def make_env(name, agent):
-    env = gym.make(name)
+def make_env(name, agent, debug):
+    if debug :    
+        env = gym.make(name, render_mode="human")
+        env.metadata['render_fps']=25
+    else:
+        env = gym.make(name)
     return env
 
 def take_step(name, env, agent, score, debug):
     
     #1 and 2: Update timesteps and save weights
     agent.total_timesteps += 1
-    if agent.total_timesteps % 50000 == 0:
+    if agent.total_timesteps % 5000 == 0:
       agent.model.save_weights('recent_weights.hdf5')
       print('\nWeights saved!')
 
     #3: Take action
-    next_frame, next_frames_reward, next_frame_terminal, info = env.step(agent.memory.actions[-1])
-    
+    #bnl add next_frame_trunc
+    next_frame, next_frames_reward, next_frame_terminal, next_frame_trunc, info = env.step(agent.memory.actions[-1])
+    next_frame_terminal = next_frame_terminal or next_frame_trunc
     #4: Get next state
     next_frame = ppf.resize_frame(next_frame)
     new_state = [agent.memory.frames[-3], agent.memory.frames[-2], agent.memory.frames[-1], next_frame]
@@ -57,7 +62,7 @@ def take_step(name, env, agent, score, debug):
 
     return (score + next_frames_reward),False
 
-def play_episode(name, env, agent, debug = False):
+def play_episode(name, env, agent, debug):
     initialize_new_game(name, env, agent)
     done = False
     score = 0
@@ -66,3 +71,4 @@ def play_episode(name, env, agent, debug = False):
         if done:
             break
     return score
+

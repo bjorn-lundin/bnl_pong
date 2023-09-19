@@ -102,3 +102,4 @@ class Agent():
         if self.learns % 10000 == 0:
             self.model_target.set_weights(self.model.get_weights())
             print('\nTarget model updated')
+
