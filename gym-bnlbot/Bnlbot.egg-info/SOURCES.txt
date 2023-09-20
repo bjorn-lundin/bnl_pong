@@ -1,0 +1,5 @@
+setup.py
+Bnlbot.egg-info/PKG-INFO
+Bnlbot.egg-info/SOURCES.txt
+Bnlbot.egg-info/dependency_links.txt
+Bnlbot.egg-info/top_level.txt

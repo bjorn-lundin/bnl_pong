@@ -56,3 +56,15 @@ Must be a mem-leak
 http://lundin.duckdns.org/pong.html
 
 
+You also need to get the customized gym-class registered
+
+    (bnl_pong) bnl@iMac:~/git/bnl_pong$ cd gym-bnlbot
+    (bnl_pong) bnl@iMac:~/git/bnl_pong/gym-bnlbot$ ls
+    gym_bnlbot  setup.py
+
+    (bnl_pong) bnl@iMac:~/git/bnl_pong/gym-bnlbot$ pip install -e .
+    Obtaining file:///home/bnl/git/bnl_pong/gym-bnlbot
+      Preparing metadata (setup.py) ... done
+    Installing collected packages: Bnlbot
+      Running setup.py develop for Bnlbot
+    Successfully installed Bnlbot-0.0.1

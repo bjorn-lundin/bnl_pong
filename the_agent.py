@@ -41,6 +41,7 @@ class Agent():
         self.lives = starting_lives #this parameter does not apply to pong
         self.starting_mem_len = starting_mem_len
         self.learns = 0
+        self.weight_filename = 'bnlbot_weights.hdf5'
 
 
     def _build_model(self):

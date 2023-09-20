@@ -5,8 +5,8 @@ import time
 from collections import deque
 import numpy as np
 
-name = 'PongDeterministic-v4'
-
+#name = 'PongDeterministic-v4'
+name= 'bnlbot-v0'
 #debug=True
 debug=False
 #set debug to true for rendering
@@ -19,8 +19,8 @@ scores = deque(maxlen = 100)
 max_score = -21
 
 #""" If testing:
-agent.model.load_weights('recent_weights.hdf5')
-agent.model_target.load_weights('recent_weights.hdf5')
+agent.model.load_weights(agent.weight_filename)
+agent.model_target.load_weights(agent.weight_filename)
 agent.epsilon = 0.0
 #"""
 

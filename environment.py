@@ -1,7 +1,7 @@
 import gymnasium as gym
 import numpy as np
 import cv2
-
+import gym_bnlbot
 
 def resize_frame(frame):
     frame = frame[30:-12,5:-4]
@@ -24,9 +24,10 @@ def initialize_new_game(name, env, agent):
         agent.memory.add_experience(starting_frame, dummy_reward, dummy_action, dummy_done)
 
 def make_env(name, agent, debug):
+    
     if debug :    
         env = gym.make(name, render_mode="human")
-        env.metadata['render_fps']=25
+        env.metadata['render_fps'] = 5
     else:
         env = gym.make(name)
     return env
@@ -36,7 +37,7 @@ def take_step(name, env, agent, score, debug):
     #1 and 2: Update timesteps and save weights
     agent.total_timesteps += 1
     if agent.total_timesteps % 5000 == 0:
-      agent.model.save_weights('recent_weights.hdf5')
+      agent.model.save_weights(agent.weight_filename)
       print('\nWeights saved!')
 
     #3: Take action

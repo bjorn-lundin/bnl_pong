@@ -1,6 +1,10 @@
+print('bnlbot start')
+
 import gymnasium as gym
-from gym import error, spaces, utils
-from gym.utils import seeding
+from gymnasium import error, spaces, utils
+from gymnasium.utils import seeding
+#from gym import error, spaces, utils
+#from gym.utils import seeding
 import os
 from pathlib import Path
 import copy
@@ -9,11 +13,12 @@ RACEFILE_DIRECTORY = os.environ.get('BOT_HISTORY') + '/data/ai/win/races'
 REWARDFILE_DIRECTORY = os.environ.get('BOT_HISTORY') + '/data/ai/plc/rewards'
 WIN_PLACE_CONNECTION = os.environ.get('BOT_HISTORY') + '/data/ai/win_place_connection.dat'
 
+print('bnlbot stop')
 
   ##########################################
 
 
-class BnlbotEnv(gym.Env):
+class Bnlbot(gym.Env):
   metadata = {"render_modes": ["human", "ansi"], "render_fps": 4}  
 
   ##########################################
