@@ -20,6 +20,8 @@ print('bnlbot stop')
 
 class Bnlbot(gym.Env):
   metadata = {"render_modes": ["human", "ansi"], "render_fps": 4}  
+  DO_NOT_PLACE_BET=0
+  DO_PLACE_BET=1
 
   ##########################################
   def __init__(self, render_mode=None, size=16):
@@ -37,6 +39,7 @@ class Bnlbot(gym.Env):
     
     
     # We have 2 actions, corresponding to "dont place bet", "place bet on leader"
+    #                                         0                     1
     self.action_space = spaces.Discrete(2)   
     
     assert render_mode is None or render_mode in self.metadata["render_modes"]
@@ -139,7 +142,7 @@ class Bnlbot(gym.Env):
     info = "no_info"
 
     #decide to bet or not
-    if action == 2 :
+    if action == DO_PLACE_BET :
         #do bet on first runner found with lowest odds
         lowest = 10000.0
         idx = 0
