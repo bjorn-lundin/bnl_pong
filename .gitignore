@@ -18,3 +18,5 @@ __pycache__/
 recent_weights.hdf5
 
 training.log
+
+png/
