@@ -1,3 +1,4 @@
+from gym_bnlbot.envs.bnlbot import Bnlbot
 import gymnasium as gym
 import numpy as np
 import cv2
@@ -19,7 +20,7 @@ def make_env(name, agent, debug):
 def take_step(name, env, agent, score, debug):
     
     #bnl add next_frame_trunc
-    next_frame, next_frames_reward, next_frame_terminal, next_frame_trunc, info = env.step(0)
+    next_frame, next_frames_reward, next_frame_terminal, next_frame_trunc, info = env.step(Bnlbot.DO_PLACE_BET)
     next_frame_terminal = next_frame_terminal or next_frame_trunc
     #5: Get next action, using next state
     next_action = env.action_space.sample()
