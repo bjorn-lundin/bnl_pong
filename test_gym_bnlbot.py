@@ -5,13 +5,13 @@ import cv2
 import gym_bnlbot
 
 
-def initialize_new_game(name, env, agent):
+def initialize_new_race(name, env, agent):
     env.reset()
 
 def make_env(name, agent, debug):
     
     if debug :    
-        env = gym.make(name, render_mode="human")
+        env = gym.make(name, render_mode="rgb")
         env.metadata['render_fps'] = 5
     else:
         env = gym.make(name)
@@ -34,7 +34,7 @@ def take_step(name, env, agent, score, debug):
     return (score + next_frames_reward),False
 
 def play_episode(name, env, agent, debug):
-    initialize_new_game(name, env, agent)
+    initialize_new_race(name, env, agent)
     done = False
     score = 0
     while True:
@@ -51,7 +51,8 @@ agent=None
 env = make_env(name,agent,debug)
 #env.reset()
 
-while True:
-  score = play_episode(name, env, agent, debug) 
+#while True:
+#  score = play_episode(name, env, agent, debug) 
 
+score = play_episode(name, env, agent, debug) 
 

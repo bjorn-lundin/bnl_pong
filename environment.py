@@ -1,7 +1,7 @@
 import gymnasium as gym
 import numpy as np
 import cv2
-import gym_bnlbot
+#import gym_bnlbot
 
 def resize_frame(frame):
     frame = frame[30:-12,5:-4]
@@ -11,7 +11,7 @@ def resize_frame(frame):
     return frame
 
 
-def initialize_new_game(name, env, agent):
+def initialize_new_race(name, env, agent):
     """We don't want an agents past game influencing its new game, so we add in some dummy data to initialize"""
     
     env.reset()
@@ -72,7 +72,7 @@ def take_step(name, env, agent, score, debug):
     return (score + next_frames_reward),False
 
 def play_episode(name, env, agent, debug):
-    initialize_new_game(name, env, agent)
+    initialize_new_race(name, env, agent)
     done = False
     score = 0
     while True:
