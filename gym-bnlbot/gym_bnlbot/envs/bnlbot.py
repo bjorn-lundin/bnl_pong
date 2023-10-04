@@ -64,16 +64,17 @@ class Bnlbot(gym.Env):
 
 
   ##########################################
-  def __init__(self, render_mode=None, size=16):
+  def __init__(self, render_mode=None, size=80):
     print('__init__ start')
     # stuff from https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/
     
-    self.size = size  # Num runners
+    self.size = size  # num pixels
     
     self.observation_space = spaces.Dict(
             {
              #   "obs": spaces.Box(0, 255, (255,), np.uint8)
-                "obs": spaces.Box(0, 255, (210, 160, 3), np.uint8)
+                #"obs": spaces.Box(0, 255, (210, 160, 3), np.uint8)
+                "obs": spaces.Box(0, size - 1, shape=(2,), dtype=int)
                # "agent": spaces.Box(0, size - 1, shape=(1,), dtype=float),
                # "target": spaces.Box(0, size - 1, shape=(1,), dtype=float),
             }
@@ -182,7 +183,7 @@ class Bnlbot(gym.Env):
     ticlist = self.get_observation_as_tics()
 
 
-    n=0    
+    n=0
     for tic in ticlist :
        img = self.draw_odds(img, n, tic)
        n = n + 1
@@ -192,7 +193,7 @@ class Bnlbot(gym.Env):
   #  file name with extension
   #  file_name = os.path.basename(self.filename)
   #  file name without extension
-  #  base_name = (os.path.splitext(file_name)[0])        
+  #  base_name = (os.path.splitext(file_name)[0])
   #  cv2.imwrite("png/" + base_name + "_" + str(self.line_number) + ".png",img)
     
     return {'obs' : img}
@@ -289,14 +290,14 @@ class Bnlbot(gym.Env):
     self.racefile_idx = self.racefile_idx +1
     print('new self.racefile_list_idx', self.racefile_idx)
     
-    # start from beginning 
+    # start from beginning
     if self.racefile_idx >= len(self.racefile_list) :
       self.racefile_idx = -1
       info['epoch_finished'] = True
 
     if not info['epoch_finished'] :
       self.filename = RACEFILE_DIRECTORY + '/' + self.racefile_list[self.racefile_idx]
-      self.filehandle = open(self.filename)  
+      self.filehandle = open(self.filename)
       print('new self.filename', self.filename)
 
     return (self.get_observation(), info)
