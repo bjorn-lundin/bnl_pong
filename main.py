@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 import time
 from collections import deque
 import numpy as np
+from gym_bnlbot.envs.bnlbot import Bnlbot
+import gym_bnlbot
+import os
+
 
 #name = 'PongDeterministic-v4'
 name= 'bnlbot-v0'
@@ -11,7 +15,7 @@ name= 'bnlbot-v0'
 debug=False
 #set debug to true for rendering
 
-agent = the_agent.Agent(possible_actions=[0,2,3],starting_mem_len=50000,max_mem_len=750000,starting_epsilon = 1, learn_rate = .00025)
+agent = the_agent.Agent(possible_actions=[Bnlbot.DO_NOT_PLACE_BET,Bnlbot.DO_PLACE_BET],starting_mem_len=50000,max_mem_len=750000,starting_epsilon = 1, learn_rate = .00025)
 env = environment.make_env(name,agent,debug)
 
 last_100_avg = [-21]
@@ -19,9 +23,10 @@ scores = deque(maxlen = 100)
 max_score = -21
 
 #""" If testing:
-agent.model.load_weights(agent.weight_filename)
-agent.model_target.load_weights(agent.weight_filename)
-agent.epsilon = 0.0
+if os.path.isfile(agent.weight_filename):
+  agent.model.load_weights(agent.weight_filename)
+  agent.model_target.load_weights(agent.weight_filename)
+  agent.epsilon = 0.0
 #"""
 
 env.reset()
