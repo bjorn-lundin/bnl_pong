@@ -69,19 +69,23 @@ class Bnlbot(gym.Env):
     # stuff from https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/
     
     self.size = size  # num pixels
+
+    self.observation_space = spaces.Box(0, size - 1, shape=(2,), dtype=np.uint8)
+
     
-    self.observation_space = spaces.Dict(
-            {
-             #   "obs": spaces.Box(0, 255, (255,), np.uint8)
-                #"obs": spaces.Box(0, 255, (210, 160, 3), np.uint8)
-                "obs": spaces.Box(0, size - 1, shape=(2,), dtype=int)
-               # "agent": spaces.Box(0, size - 1, shape=(1,), dtype=float),
-               # "target": spaces.Box(0, size - 1, shape=(1,), dtype=float),
-            }
-        )
+#    self.observation_space = spaces.Dict(
+#            {
+#             #   "obs": spaces.Box(0, 255, (255,), np.uint8)
+#                #"obs": spaces.Box(0, 255, (210, 160, 3), np.uint8)
+#                "obs": spaces.Box(0, size - 1, shape=(2,), dtype=int)
+#               # "agent": spaces.Box(0, size - 1, shape=(1,), dtype=float),
+#               # "target": spaces.Box(0, size - 1, shape=(1,), dtype=float),
+#            }
+#        )
     
     
-    print('self.observation_space', self.observation_space, self.observation_space ['obs'])
+#    print('self.observation_space', self.observation_space, self.observation_space ['obs'])
+    print('self.observation_space', self.observation_space, type(self.observation_space))
     
     # We have 2 actions, corresponding to "dont place bet", "place bet on leader"
     #                                         0                     1
@@ -106,7 +110,8 @@ class Bnlbot(gym.Env):
     for dirname in dir_list:
         mydir = Path(RACEFILE_DIRECTORY + '/' + dirname)
         print(dirname + ' ' + str(mydir.is_dir()))
-        if mydir.is_dir() and dirname == '2m4f_Hcap':
+#        if mydir.is_dir() and dirname == '2m4f_Hcap':
+        if mydir.is_dir() :
             file_list = os.listdir(RACEFILE_DIRECTORY + '/' + dirname)
             for filename in file_list:
                 print('treat', filename)
@@ -176,7 +181,7 @@ class Bnlbot(gym.Env):
     self.line_number = self.line_number +1
 
     #print ('get_observation.self.line',self.line)
-    print ('get_observation.self.line_number',self.line_number)
+#    print ('get_observation.self.line_number',self.line_number)
     data = self.line.split(',')
     #print ('get_observation.data', data)
     #print ('get_observation.data[17:32+1]',data[17:32+1])
@@ -195,7 +200,7 @@ class Bnlbot(gym.Env):
   #  file name without extension
   #  base_name = (os.path.splitext(file_name)[0])
   #  cv2.imwrite("png/" + base_name + "_" + str(self.line_number) + ".png",img)
-    
+    return img
     return {'obs' : img}
   ##########################################
   
@@ -221,7 +226,7 @@ class Bnlbot(gym.Env):
     rew = 0.0
     info = { "stuff": "no_info" }
     #print('step')
-    #print('action ' + str(action))
+    print('action', action, 'place_ bet', action == Bnlbot.DO_PLACE_BET)
     ob = self.get_observation()
     #check for eof
     if len(self.line) == 0 :
@@ -281,6 +286,7 @@ class Bnlbot(gym.Env):
 
     if self.filehandle is not None:
       print('closing self.filename', self.filename)
+      print('old self.line_number', self.line_number)
       self.filehandle.close()
       self.filename = ""
       self.line_number = 0
@@ -294,11 +300,12 @@ class Bnlbot(gym.Env):
     if self.racefile_idx >= len(self.racefile_list) :
       self.racefile_idx = -1
       info['epoch_finished'] = True
-
+ 
     if not info['epoch_finished'] :
       self.filename = RACEFILE_DIRECTORY + '/' + self.racefile_list[self.racefile_idx]
       self.filehandle = open(self.filename)
       print('new self.filename', self.filename)
+      
 
     return (self.get_observation(), info)
 
