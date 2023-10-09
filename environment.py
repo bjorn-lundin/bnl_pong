@@ -4,8 +4,12 @@ import cv2
 #import gym_bnlbot
 
 def resize_frame(frame):
-    frame = frame[30:-12,5:-4]
-    frame = np.average(frame,axis = 2)
+   # frame = frame[30:-12,5:-4]
+   
+    #print ('frame type', type(frame))
+    #print ('frame', frame)
+   
+    #frame = np.average(frame,axis = 2)
     frame = cv2.resize(frame,(84,84),interpolation = cv2.INTER_NEAREST)
     frame = np.array(frame,dtype = np.uint8)
     return frame
@@ -53,13 +57,13 @@ def take_step(name, env, agent, score, debug):
     #5: Get next action, using next state
     next_action = agent.get_action(new_state)
 
-    #6: If game is over, return the score
-    if next_frame_terminal:
-        agent.memory.add_experience(next_frame, next_frames_reward, next_action, next_frame_terminal)
-        return (score + next_frames_reward),True
-
     #7: Now we add the next experience to memory
     agent.memory.add_experience(next_frame, next_frames_reward, next_action, next_frame_terminal)
+
+    #6: If game is over, return the score
+    if next_frame_terminal:
+        return (score + next_frames_reward),True
+
 
     #8: If we are trying to debug this then render
     if debug:
@@ -75,9 +79,7 @@ def play_episode(name, env, agent, debug):
     initialize_new_race(name, env, agent)
     done = False
     score = 0
-    while True:
+    while not done:
         score,done = take_step(name,env,agent,score, debug)
-        if done:
-            break
     return score
 
